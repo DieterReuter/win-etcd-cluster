@@ -1,6 +1,15 @@
 @echo off
 
+set SRC="C:\vagrant\install\opt"
 set DEST="C:\opt\"
+set NSSM="C:\opt\nssm\bin\nssm.exe"
+set ETCD="C:\opt\etcd\bin\etcd.exe"
+set SERVICE_NAME=etcd Service
+set SERVICE_DESCRIPTION=etcd Service for Windows
+set SERVICE_LOGFILE="C:\opt\etcd\log\etcd.log"
+set SERVICE_PARAMETERS="-config C:\opt\etcd\etc\etcd.conf -trace=*"
+
+:rem ---DO NOT EDIT BEYOND---
 
 echo.
 echo Script: provision-etcd.bat startet...
@@ -10,12 +19,8 @@ if not exist "%DEST%" (
   echo.
   echo Copy files to %DEST%
   echo.
-  xcopy /Y /E "C:\vagrant\install\opt" "%DEST%"
+  xcopy /Y /E "%SRC%" "%DEST%"
 ) 
-
-set NSSM="C:\opt\nssm\bin\nssm.exe"
-set ETCD="C:\opt\etcd\bin\etcd.exe"
-set SERVICE_NAME=etcd Service
 
 echo.
 echo [SC] Stopping service "%SERVICE_NAME%"
@@ -24,9 +29,10 @@ sc stop "%SERVICE_NAME%" >NUL 2>NUL
 echo [NSSM] Trying to remove possibly pre-existing service "%SERVICE_NAME%"...
 "%NSSM%" remove "%SERVICE_NAME%" confirm > NUL 2>NUL
 "%NSSM%" install "%SERVICE_NAME%" "%ETCD%"
-"%NSSM%" set "%SERVICE_NAME%" AppParameters "-config C:\opt\etcd\etc\etcd.conf -trace=*"
-"%NSSM%" set "%SERVICE_NAME%" AppStdout "C:\opt\etcd\log\etcd.log"
-"%NSSM%" set "%SERVICE_NAME%" Description "etcd Service for Windows"
+"%NSSM%" set "%SERVICE_NAME%" AppParameters "%SERVICE_PARAMETERS%"
+"%NSSM%" set "%SERVICE_NAME%" AppStdout "%SERVICE_LOGFILE%"
+"%NSSM%" set "%SERVICE_NAME%" AppStderr "%SERVICE_LOGFILE%"
+"%NSSM%" set "%SERVICE_NAME%" Description "%SERVICE_DESCRIPTION%"
 
 
 if not errorlevel 1 (
@@ -40,11 +46,12 @@ if not errorlevel 1 (
   sc start "%SERVICE_NAME%"
 )
 
+echo [NETSH] Open firewall ports 4001,7001
 netsh advfirewall firewall add rule name="etcd Service Port 4001" dir=in action=allow protocol=TCP localport=4001
 netsh advfirewall firewall add rule name="etcd Service Port 7001" dir=in action=allow protocol=TCP localport=7001
 
 echo.
-echo etcd Serive should be available at:
+echo etcd Service should be available at:
 echo     http://127.0.0.1:4001/version
 echo     http://%COMPUTERNAME%:4001/version
 echo.

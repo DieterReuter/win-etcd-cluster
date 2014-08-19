@@ -1,10 +1,10 @@
 @echo off
 
-
 set DEST="C:\opt\"
-
 set NSSM="C:\opt\nssm\bin\nssm.exe"
 set SERVICE_NAME=etcd Service
+
+:rem ---DO NOT EDIT BEYOND---
 
 echo.
 echo [SC] Stopping service "%SERVICE_NAME%"
@@ -20,5 +20,6 @@ if exist "%DEST%" (
   rmdir /Q /S "%DEST%"
 )
 
+echo [NETSH] Close firewall ports 4001,7001
 netsh advfirewall firewall delete rule name="etcd Service Port 4001"
 netsh advfirewall firewall delete rule name="etcd Service Port 7001"
