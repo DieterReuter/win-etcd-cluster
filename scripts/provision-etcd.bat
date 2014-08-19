@@ -26,6 +26,8 @@ echo [NSSM] Trying to remove possibly pre-existing service "%SERVICE_NAME%"...
 "%NSSM%" install "%SERVICE_NAME%" "%ETCD%"
 "%NSSM%" set "%SERVICE_NAME%" AppParameters "-config C:\opt\etcd\etc\etcd.conf -trace=*"
 "%NSSM%" set "%SERVICE_NAME%" AppStdout "C:\opt\etcd\log\etcd.log"
+"%NSSM%" set "%SERVICE_NAME%" Description "etcd Service for Windows"
+
 
 if not errorlevel 1 (
   :rem echo.
