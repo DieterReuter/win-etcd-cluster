@@ -2,7 +2,7 @@
 #
 
 # defaults
-$NumberOfPrinters   = 5            # Number of Printers/Ports to create
+$NumberOfPrinters   = 2            # Number of Printers/Ports to create
 $PrintDestinationIP = "127.0.0.1"  # IP address of the destination print server
 
 

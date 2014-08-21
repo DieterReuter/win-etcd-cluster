@@ -1,1 +1,1 @@
-powershell -File bootstrap-printserver.ps1
+powershell -File \vagrant\scripts\bootstrap-printserver.ps1

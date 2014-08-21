@@ -9,22 +9,26 @@
 :rem Feature Name : Printing-InternetPrinting-Server
 
 echo.
-echo "Enable Windows Feature=Printing-Server-Role"
+echo.
+echo Enable Windows Feature=Printing-Server-Role
 dism.exe /Online /Enable-Feature=Printing-Server-Role
 
 echo.
-echo "Enable Windows Feature=Printing-LPDPrintService"
-echo "   LPD-Server is running on Port=515/tcp"
+echo.
+echo Enable Windows Feature=Printing-LPDPrintService
+echo    LPD-Server is running on Port=515/tcp
 dism.exe /Online /Enable-Feature=Printing-LPDPrintService
 
 echo.
-echo "Enable Windows Feature=Printing-LPRPortMonitor"
-echo "   LPR.exe, LPQ.exe, LPR-PortMonitor"
+echo.
+echo Enable Windows Feature=Printing-LPRPortMonitor
+echo    LPR.exe, LPQ.exe, LPR-PortMonitor
 dism.exe /Online /Enable-Feature=Printing-LPRPortMonitor
 
 echo.
-echo "Enable Windows Feature=TelnetClient"
-echo "   TELNET.exe"
+echo.
+echo Enable Windows Feature=TelnetClient
+echo    TELNET.exe
 dism.exe /Online /Enable-Feature=TelnetClient
 echo.
-echo "Done..."
+echo Done...
