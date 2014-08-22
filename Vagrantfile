@@ -35,8 +35,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vb.customize ["modifyvm", :id, "--vram", "32"]
       end
 
-      ip = "172.17.8.#{i+100}" 
-      config.vm.network :private_network, ip: ip 
+      #ip = "172.17.8.#{i+100}" 
+      #config.vm.network :private_network, ip: ip 
+      config.vm.network :public_network
 
       config.vm.provision "shell", path: "scripts/provision-etcd.bat"
     end
