@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 # Defaults for options
-$num_instances = 3
+$num_instances = 1
 $vb_gui = true 
 $vb_memory = 1024 
 $vb_cpus = 1 
@@ -40,6 +40,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       config.vm.network :public_network
 
       config.vm.provision "shell", path: "scripts/provision-etcd.bat"
+      config.vm.provision "shell", path: "scripts/provision-printservice.bat"
+
     end
   end
 end
